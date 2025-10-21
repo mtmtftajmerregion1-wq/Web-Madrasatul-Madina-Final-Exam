@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>مدرسۃ المدینہ ڈیش بورڈ</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+            direction: rtl;
+            background: #eef7f1;
+        }
+
+        h2 {
+            color: #065f3d;
+            border-bottom: 2px solid #0a704c;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            align-items: center;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h2 {
+            color: #065f3d;
+            border-bottom: 2px solid #0a704c;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .back-btn,
+        .add-btn,
+        .save-btn,
+        .delete-btn {
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            padding: 6px 15px;
+            font-size: 15px;
+        }
+
+        .add-btn {
+            background: #4caf50;
+        }
+
+        .add-btn:hover {
+            background: #388e3c;
+        }
+
+        .save-btn {
+            background: #1976d2;
+            margin-top: 10px;
+        }
+
+        .delete-btn {
+            background: #c62828;
+        }
+
+        .delete-btn:hover {
+            background: #a61616;
+        }
+
+        .back-btn {
+            background: #1976d2;
+        }
+
+        .back-btn:hover {
+            background: #0d47a1;
+        }
+
+        .user-form {
+            background: #f1f8f6;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .user-form label {
+            display: block;
+            margin-top: 10px;
+            color: #065f3d;
+            font-weight: bold;
+        }
+
+        .user-form input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #0a704c;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background: #0b4d3a;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 ط اَمَّا>اَلْحَمْدُ لِلّٰہِ رَبِّ الْعٰلَمِیْنَ وَ الصَّلٰوۃُ وَالسَّلَامُ علٰی سَیِّدِ الْمُرْسَلِیْنَ
+            بَعْدُ
+            فَاَعُوْذُ بِاللّٰهِ مِنَ الشَّیْطٰنِ الرَّجِیْمِ ط بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ط</h2>
+        <h3>نیو داخلہ</h3>
+        <hr>
+        <div>
+            <div>
+                <div class="action-buttons">
+                    <button class="add-btn" onclick="toggleAdmissionForm()">نیو داخلہ</button>
+                    <button class="back-btn" onclick="goBack()">Back Page</button>
+                </div>
+
+                <!-- Hidden Form -->
+                <div id="addAdmissionForm" class="user-form" style="display:none;">
+                    <form id="admissionForm">
+                        <label>طالب علم کا نام:</label>
+                        <input type="text" id="studentName" required>
+
+                        <label>ولدیت:</label>
+                        <input type="text" id="fatherName" required>
+
+                        <label>کلاس:</label>
+                        <input type="text" id="className" required>
+
+                        <label>تاریخ پیدائش:</label>
+                        <input type="date" id="dob" required>
+
+                        <label>موبائل نمبر:</label>
+                        <input type="text" id="mobile" required>
+
+                        <label>پتہ:</label>
+                        <input type="text" id="address" required>
+
+                        <button type="submit" class="save-btn">محفوظ کریں</button>
+                    </form>
+                </div>
+
+                <!-- Table -->
+                <table id="admissionTable">
+                    <thead>
+                        <tr>
+                            <th>نمبر</th>
+                            <th>نام</th>
+                            <th>ولدیت</th>
+                            <th>کلاس</th>
+                            <th>موبائل نمبر</th>
+                            <th>پتہ</th>
+                            <th>کارروائی</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <script>
+                function toggleAdmissionForm() {
+                    const form = document.getElementById("addAdmissionForm");
+                    form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+                }
+
+                document.getElementById("admissionForm").addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    const studentName = document.getElementById("studentName").value.trim();
+                    const fatherName = document.getElementById("fatherName").value.trim();
+                    const className = document.getElementById("className").value.trim();
+                    const dob = document.getElementById("dob").value.trim();
+                    const mobile = document.getElementById("mobile").value.trim();
+                    const address = document.getElementById("address").value.trim();
+
+                    if (!studentName || !fatherName || !className || !dob || !mobile || !address) {
+                        alert("تمام خانے پر کریں!");
+                        return;
+                    }
+
+                    const admissions = JSON.parse(localStorage.getItem("admissions")) || [];
+                    admissions.push({ studentName, fatherName, className, dob, mobile, address });
+                    localStorage.setItem("admissions", JSON.stringify(admissions));
+
+                    displayAdmissions();
+                    e.target.reset();
+                    document.getElementById("addAdmissionForm").style.display = "none";
+                });
+
+                function displayAdmissions() {
+                    const tbody = document.querySelector("#admissionTable tbody");
+                    tbody.innerHTML = "";
+                    const admissions = JSON.parse(localStorage.getItem("admissions")) || [];
+                    admissions.forEach((a, i) => {
+                        tbody.innerHTML += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${a.studentName}</td>
+        <td>${a.fatherName}</td>
+        <td>${a.className}</td>
+        <td>${a.mobile}</td>
+        <td>${a.address}</td>
+        <td><button class="delete-btn" onclick="deleteAdmission(${i})">حذف</button></td>
+      </tr>`;
+                    });
+                }
+
+                function deleteAdmission(index) {
+                    const admissions = JSON.parse(localStorage.getItem("admissions")) || [];
+                    admissions.splice(index, 1);
+                    localStorage.setItem("admissions", JSON.stringify(admissions));
+                    displayAdmissions();
+                }
+
+                function goBack() {
+                    window.history.back();
+                }
+
+                window.onload = displayAdmissions;
+            </script>
+            <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+// 🔹 آپ کا Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyAU6SfN6rrMdxVe4V3TW6DHvx0wl-W0MP4",
+  authDomain: "mtm-final-exam.firebaseapp.com",
+  databaseURL: "https://mtm-final-exam-default-rtdb.firebaseio.com",
+  projectId: "mtm-final-exam",
+  storageBucket: "mtm-final-exam.firebasestorage.app",
+  messagingSenderId: "600001694891",
+  appId: "1:600001694891:web:cf235c6c4a77d5a093fbee",
+  measurementId: "G-GCLYLJ9FWC"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.db = db; // تاکہ باقی HTML میں use ہو سکے
+window.ref = ref;
+window.push = push;
+window.onValue = onValue;
+  </script>
+</body>
+
+</html>

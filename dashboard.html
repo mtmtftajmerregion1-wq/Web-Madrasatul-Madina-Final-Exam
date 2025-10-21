@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <title>مدرسۃ المدینہ ڈیش بورڈ</title>
+  <style>
+    /* 🔹 Nested Submenu */
+    .inner-submenu {
+      background: #f5f0f0;
+      margin-right: 10px;
+      border-right: 2px solid #aaa;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      list-style: none;
+      padding-right: 0;
+    }
+
+    .inner-submenu.open {
+      max-height: 400px;
+    }
+
+    .inner-submenu li a {
+      padding: 8px 35px;
+      color: #000;
+      display: block;
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+      direction: rtl;
+      background: #eeefef;
+    }
+
+    /* 🔹 Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+
+    /* 🔹 Sidebar */
+    .sidebar {
+      width: 200px;
+      background: #065f3d;
+      color: #fff;
+      padding: 10px;
+      box-shadow: 5px 0 5px rgba(0, 0, 0, 0);
+      overflow: hidden;
+      transition: width 0.3s ease, all 0.3s ease;
+      position: relative;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #f8f7f7;
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .sidebar h2 img {
+      width: 25px;
+      height: 25px;
+      filter: invert(1);
+    }
+
+    /* 🔹 Menu List */
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-list li {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .dropdown-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      padding: 10px 12px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .dropdown-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .submenu {
+      max-height: 0;
+      overflow: hidden;
+      background: #065f3d;
+      transition: max-height 0.4s ease;
+      list-style: none;
+      padding-right: 0;
+    }
+
+    .submenu.open {
+      max-height: 800px;
+    }
+
+    .submenu li a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 25px;
+      color: #f3f1f1;
+      text-decoration: none;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .submenu li a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* 🔹 Icons */
+    .menu-icon {
+      width: 14px;
+      height: 14px;
+      filter: invert(1);
+      margin-left: 5px;
+    }
+
+    .arrow-icon {
+      width: 12px;
+      height: 12px;
+      filter: invert(1);
+      transition: transform 0.3s ease;
+    }
+
+    .rotate {
+      transform: rotate(180deg);
+    }
+
+    /* 🔹 Collapse Button */
+    .collapse-btn {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #e4e0e0;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      transition: all 0.3s ease;
+    }
+
+    .collapse-btn:hover {
+      background: #8df0b9;
+    }
+
+    .collapse-btn img {
+      width: 18px;
+      height: 18px;
+      filter: invert(0.4);
+    }
+
+    /* 🔹 Main Content */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+    }
+
+    .main-content h2 {
+      color: #065f3d;
+      border-bottom: 2px solid #0d0e0d;
+      padding-bottom: 5px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <h2>
+        <img src="https://pic.onlinewebfonts.com/thumbnails/icons_263128.svg" alt="icon">
+        Menu
+      </h2>
+
+      <ul class="nav-list">
+        <!-- ایڈمن -->
+        <li>
+          <a href="#" class="dropdown-toggle" onclick="toggleDropdown(this)">
+            <img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg">
+            <span>ایڈمن</span>
+            <img class="arrow-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_657638.svg">
+          </a>
+          <ul class="submenu">
+            <li><a href="user.html"><img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg"> یوزر</a></li>
+          </ul>
+        </li>
+
+        <!-- بنیادی سیٹ اپ -->
+        <li>
+          <a href="#" class="dropdown-toggle" onclick="toggleDropdown(this)">
+            <img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg">
+            <span>بنیادی سیٹ اپ</span>
+            <img class="arrow-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_657638.svg">
+          </a>
+          <ul class="submenu">
+            <li><a href="soba.html"><img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg"> صوبہ</a></li>
+            <li><a href="dist.html"><img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg"> شہر</a></li>
+            <li><a href="#">ریجن</a></li>
+            <li><a href="#">ڈویژن</a></li>
+            <li><a href="#">کابینہ</a></li>
+            <li><a href="#">مدرسۃ شاخ</a></li>
+            <li><a href="#">مدنی عملہ</a></li>
+          </ul>
+        </li>
+
+        <!-- طلباء اندراج -->
+        <li>
+          <a href="#" class="dropdown-toggle" onclick="toggleDropdown(this)">
+            <img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg">
+            <span>طلباء اندراج</span>
+            <img class="arrow-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_657638.svg">
+          </a>
+          <ul class="submenu">
+            <li><a href="student-form.html"><img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg"> داخلہ فارم</a></li>
+
+            <li>
+              <a href="#" class="dropdown-toggle" onclick="toggleSubDropdown(this)">
+                <img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg">
+                <span>فائنل امتحان</span>
+                <img class="arrow-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_657638.svg">
+              </a>
+              <ul class="submenu inner-submenu">
+                <li><a href="nazra form.html"><img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg"> ناظرہ فارم</a></li>
+                <li><a href="#"><img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg"> حفظ فارم</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <!-- رپورٹس -->
+        <li>
+          <a href="#" class="dropdown-toggle" onclick="toggleDropdown(this)">
+            <img class="menu-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_264669.svg">
+            <span>رپورٹس</span>
+            <img class="arrow-icon" src="https://pic.onlinewebfonts.com/thumbnails/icons_657638.svg">
+          </a>
+          <ul class="submenu">
+            <li><a href="#">سالانہ رپورٹ</a></li>
+            <li><a href="#" onclick="logout()">🔒 لاگ آؤٹ</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Collapse Button -->
+      <div class="collapse-btn" onclick="toggleSidebar()">
+        <img src="https://pic.onlinewebfonts.com/thumbnails/icons_657590.svg" alt="collapse">
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <h2>خوش آمدید!</h2>
+      <p>یہاں آپ مدرسۃ المدینہ کے مختلف آپشنز دیکھ سکتے ہیں۔</p>
+    </div>
+  </div>
+
+  <!-- 🔹 JavaScript -->
+  <script>
+    function toggleDropdown(element) {
+      const submenu = element.nextElementSibling;
+      const arrow = element.querySelector(".arrow-icon");
+      const isOpen = submenu.classList.contains("open");
+
+      document.querySelectorAll(".submenu").forEach(menu => menu.classList.remove("open"));
+      document.querySelectorAll(".arrow-icon").forEach(a => a.classList.remove("rotate"));
+
+      if (!isOpen) {
+        submenu.classList.add("open");
+        arrow.classList.add("rotate");
+      }
+    }
+
+    function toggleSubDropdown(element) {
+      const submenu = element.nextElementSibling;
+      const arrow = element.querySelector(".arrow-icon");
+      submenu.classList.toggle("open");
+      arrow.classList.toggle("rotate");
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>مدرسۃ المدینہ ڈیش بورڈ</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+            background: #eef7f1;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        h2,
+        h3,
+        h4 {
+            color: #065f3d;
+            text-align: center;
+        }
+
+        hr {
+            border: 1px solid #0a704c;
+        }
+
+        /* Top buttons container */
+        .top-buttons {
+            display: flex;
+            justify-content: flex-end;
+            /* مکمل right side */
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-direction: row-reverse;
+            /* بٹن دائیں سے بائیں ترتیب میں */
+        }
+
+        /* Back اور Add button کا style (ایک جیسا) */
+        .back-btn,
+        .add-btn {
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-size: 15px;
+            padding: 10px 25px;
+            min-width: 130px;
+            text-align: center;
+        }
+
+        .back-btn {
+            background: #6c757d;
+        }
+
+        .back-btn:hover {
+            background: #3a92d5;
+        }
+
+        .add-btn {
+            background: #4caf50;
+        }
+
+        .add-btn:hover {
+            background: #388e3c;
+        }
+
+        .save-btn,
+        .delete-btn {
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-size: 15px;
+            padding: 6px 15px;
+        }
+
+        .save-btn {
+            background: #1976d2;
+            margin-top: 10px;
+        }
+
+        .save-btn:hover {
+            background: #0d47a1;
+        }
+
+        .delete-btn {
+            background: #c62828;
+        }
+
+        .delete-btn:hover {
+            background: #a61616;
+        }
+
+        .user-form {
+            background: #f1f8f6;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+
+        .user-form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #065f3d;
+        }
+
+        .user-form input,
+        .user-form select {
+            width: 60%;
+            padding: 12px;
+            border: 1px solid #0a704c;
+            border-radius: 6px;
+            align-items: center;
+            align-self: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background: #0b4d3a;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>اَلْحَمْدُ لِلّٰہِ رَبِّ الْعٰلَمِیْنَ وَ الصَّلٰوۃُ وَالسَّلَامُ علٰی سَیِّدِ الْمُرْسَلِیْنَ ط اَمَّا
+            بَعْدُ فَاَعُوْذُ بِاللّٰهِ مِنَ الشَّیْطٰنِ الرَّجِیْمِ ط بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ط</h2>
+        <h3>یوزر</h3>
+        <hr>
+
+        <div class="top-buttons">
+            <button class="back-btn" onclick="goBack()">Back Page</button>
+            <button class="add-btn" onclick="toggleUserForm()">نیو یوزر</button>
+        </div>
+
+        <!-- Hidden Form -->
+        <div id="addUserForm" class="user-form" style="display:none;">
+            <h4>نیا یوزر فارم</h4>
+            <form id="userAddForm">
+                <label>یوزر نام:</label>
+                <input type="text" id="usernameField" required>
+
+                <label>پاس ورڈ:</label>
+                <input type="password" id="passwordField" required>
+
+                <label>رول منتخب کریں:</label>
+                <select id="roleField" required>
+                    <option value="">منتخب کریں</option>
+                    <option value="admin">ایڈمن</option>
+                    <option value="teacher">ناظم</option>
+                </select>
+
+                <button type="submit" class="save-btn">محفوظ کریں</button>
+            </form>
+        </div>
+
+        <!-- User Table -->
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>نمبر</th>
+                    <th>یوزر نام</th>
+                    <th>رول</th>
+                    <th>کارروائی</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        function toggleUserForm() {
+            const form = document.getElementById("addUserForm");
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        document.getElementById("userAddForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("usernameField").value.trim();
+            const password = document.getElementById("passwordField").value.trim();
+            const role = document.getElementById("roleField").value.trim();
+
+            if (!username || !password || !role) {
+                alert("تمام خانے پر کریں!");
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            users.push({ username, password, role });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            displayUsers();
+            e.target.reset();
+            document.getElementById("addUserForm").style.display = "none";
+        });
+
+        function displayUsers() {
+            const tbody = document.querySelector("#userTable tbody");
+            tbody.innerHTML = "";
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+
+            users.forEach((u, i) => {
+                tbody.innerHTML += `
+          <tr>
+            <td>${i + 1}</td>
+            <td>${u.username}</td>
+            <td>${u.role === "admin" ? "ایڈمن" : "ناظم"}</td>
+            <td><button class="delete-btn" onclick="deleteUser(${i})">حذف</button></td>
+          </tr>`;
+            });
+        }
+
+        function deleteUser(index) {
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            users.splice(index, 1);
+            localStorage.setItem("users", JSON.stringify(users));
+            displayUsers();
+        }
+
+        window.onload = displayUsers;
+    </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+// 🔹 آپ کا Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyAU6SfN6rrMdxVe4V3TW6DHvx0wl-W0MP4",
+  authDomain: "mtm-final-exam.firebaseapp.com",
+  databaseURL: "https://mtm-final-exam-default-rtdb.firebaseio.com",
+  projectId: "mtm-final-exam",
+  storageBucket: "mtm-final-exam.firebasestorage.app",
+  messagingSenderId: "600001694891",
+  appId: "1:600001694891:web:cf235c6c4a77d5a093fbee",
+  measurementId: "G-GCLYLJ9FWC"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.db = db; // تاکہ باقی HTML میں use ہو سکے
+window.ref = ref;
+window.push = push;
+window.onValue = onValue;
+  </script>
+</body>
+
+</html>

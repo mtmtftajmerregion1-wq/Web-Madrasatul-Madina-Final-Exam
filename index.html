@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Mtm Management</title>
+  <style>
+    body {
+      font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+      background: #242020;
+      /* 🩶 Light Grey Background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+
+    /* 🌿 Top Islamic Header */
+    .top-header {
+      background: #0e4f3400;
+      color: #f4ebeb;
+      width: 40%;
+      text-align: center;
+      padding: 0px 10px;
+      justify-content: center;
+      border-radius: 0px;
+      font-size: 20px;
+      font-family: 'Noto Kasheeda Urdu', 'Jameel Noori Kasheeda', serif;
+      letter-spacing: 10px;
+      margin-top: 40px;
+    }
+
+    /* 🩶 Login Box with Border */
+    .login-box {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      border: 5px solid #136a47;
+      /* Border Around Box */
+      box-shadow: 0 0 10px rgba(230, 207, 8, 0.1);
+      text-align: center;
+      width: 340px;
+      margin-top: 60px;
+    }
+
+    h2 {
+      color: #0b462d;
+      margin-bottom: 0px;
+    }
+
+    input {
+      width: 80%;
+      padding: 15px;
+      margin: 10px 0;
+      border: 1px solid #136a47;
+      border-radius: 10px;
+      text-align: right;
+      font-size: 16px;
+    }
+
+    button {
+      background: #136a47;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 20%;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #0e4f34;
+    }
+
+    .footer {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #0f0f0d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🌿 Top Header -->
+  <div class="top-header">
+    <h2>اَلْحَمْدُ لِلّٰہِ رَبِّ الْعٰلَمِیْنَ وَ الصَّلٰوۃُ وَالسَّلَامُ علٰی سَیِّدِ الْمُرْسَلِیْنَ ط اَمَّا بَعْدُ
+      فَاَعُوْذُ بِاللّٰهِ مِنَ الشَّیْطٰنِ الرَّجِیْمِ ط بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ط</h2>
+  </div>
+  <!-- 🩶 Login Box -->
+  <div class="login-box">
+    <h2>Madrasatul Madina Boys India
+      Management System
+    </h2>
+    <label>معلومات درج کریں</label>
+    <form onsubmit="return loginUser(event)">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit" name="Sign" value="Sign" class="width-35 pull-left btn btn-sm btn-primary">
+        <i class="icon-key"></i>
+        Sign In
+      </button>
+    </form>
+    <div class="footer">
+      Madrasatul Madina Boys India
+    </div>
+  </div>
+
+  <script>
+    function loginUser(event) {
+      event.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if (user === "admin" && pass === "12345") {
+        // ✅ login remember kar lo
+        localStorage.setItem("loggedIn", "true");
+        window.location.href = "dashboard.html";
+      } else {
+        alert("غلط یوزر نیم یا پاس ورڈ!");
+      }
+    }
+  </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+// 🔹 آپ کا Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyAU6SfN6rrMdxVe4V3TW6DHvx0wl-W0MP4",
+  authDomain: "mtm-final-exam.firebaseapp.com",
+  databaseURL: "https://mtm-final-exam-default-rtdb.firebaseio.com",
+  projectId: "mtm-final-exam",
+  storageBucket: "mtm-final-exam.firebasestorage.app",
+  messagingSenderId: "600001694891",
+  appId: "1:600001694891:web:cf235c6c4a77d5a093fbee",
+  measurementId: "G-GCLYLJ9FWC"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.db = db; // تاکہ باقی HTML میں use ہو سکے
+window.ref = ref;
+window.push = push;
+window.onValue = onValue;
+  </script>
+  <script src="script.js"></script>
+</body>
+
+</html>

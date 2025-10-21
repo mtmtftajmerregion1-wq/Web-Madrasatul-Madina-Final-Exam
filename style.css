@@ -1,0 +1,107 @@
+.submenu {
+  display: none;
+  background-color: #1d6b49;
+  transition: all 0.3s;
+  padding-right: 10px;
+}
+
+.submenu a {
+  display: block;
+  padding: 10px 25px;
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.submenu a:hover {
+  background-color: #27845a;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  direction: rtl;
+  font-family: 'Jameel Noori Nastaleeq', serif;
+}
+
+.form-container input {
+  width: 80%;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #0f5132;
+  font-size: 16px;
+  text-align: right;
+}
+
+.form-container button {
+  background-color: #0f5132;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #136a47;
+}
+
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background: #f0f9f2;
+  direction: rtl;
+}
+
+.sidebar {
+  width: 250px;
+  background: #065f3d;
+  color: white;
+  padding: 15px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.layout {
+  display: flex;
+  flex-direction: row-reverse;
+  /* اردو کے لیے دائیں سے بائیں */
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #d0f0e8;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+body {
+  font-family: "Jameel Noori Nastaleeq", "Noto Nastaliq Urdu", "Segoe UI", sans-serif;
+  background: #e8f5f1;
+  margin: 0;
+  padding: 20px;
+}
+
+.top-buttons {
+  display: flex;
+  justify-content: flex-end;
+  /* دائیں طرف سیدھ */
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-direction: row-reverse;
+  /* بٹن دائیں سے بائیں نظر آئیں */
+}

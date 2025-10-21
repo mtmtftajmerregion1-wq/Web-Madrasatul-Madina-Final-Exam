@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ناظرہ امتحانی فارم</title>
+  <style>
+    body {
+      font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+      background-color: #e8f5e9;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+    }
+    .top-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: none;
+      padding: 10px 20px;
+    }
+    .top-buttons button {
+      background: hwb(201 24% 11%);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      font-size: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .form-container {
+      width: 70%;
+      max-width: 980px;
+      background: #fff;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      display: none;
+    }
+    .form-container.show { display:block; }
+
+    h3 {
+  background:#065f3d;
+  color:#fff;
+  padding:8px 10px;
+  border-radius:5px;
+  margin-top:25px;
+  font-size:18px;
+  cursor:pointer;
+}
+h3 {
+  background:#065f3d;
+  color:#fff;
+  padding:5px 10px;          /* padding تھوڑی کم کر دی */
+  border-radius:5px;
+  margin:15px 0 5px 0;       /* اوپر نیچے کم فاصلہ */
+  font-size:17px;
+  cursor:pointer;
+  display: inline-block;     /* اب heading صرف text کے مطابق جگہ لے گا */
+  line-height: 1.4;          /* بہتر readability */
+}
+
+    
+
+    .form-section {
+      display: none;
+      margin-top: 10px;
+    }
+    .form-section.active {
+      display: block;
+    }
+
+    .form-grid {
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:14px 20px;
+      margin-top:15px;
+    }
+    .form-grid label { display:block;font-weight:bold;font-size:15px;margin-bottom:3px;color:#053421; }
+    .form-grid input, .form-grid select {
+      width:100%; padding:7px 10px;
+      border-radius:6px; border:1px solid #bbb;
+      font-family:inherit; font-size:14px;
+      box-sizing:border-box;
+    }
+    .btn-group { text-align:center; margin-top:25px; }
+    .btn-group button { margin:5px; background:#065f3d; color:#fff; border:none; padding:8px 18px; border-radius:6px; font-size:15px; cursor:pointer; }
+    .result-table { width:95%; margin:20px auto; border-collapse:collapse; display:none; }
+    .result-table th, .result-table td { border:1px solid #999; padding:8px; text-align:center; }
+    .result-table th { background:#065f3d; color:white; }
+    input[readonly] { background:#f3f3f3; }
+    @media (max-width:900px){
+      .form-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:600px){
+      .form-grid{grid-template-columns:1fr}
+      .form-container{width:94%}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="text-align:center;margin-top:12px;">ناظرہ امتحانی فارم</h2>
+
+    <div class="top-buttons">
+      <button onclick="toggleForm()">🟢 نیا فارم</button>
+      <button onclick="history.back()">⬅ واپس</button>
+      <button onclick="toggleSearch()">🔍 تلاش</button>
+    </div>
+
+    <div class="form-container" id="nazraForm">
+
+      <!-- بنیادی معلومات -->
+      <h3 onclick="toggleSection(this)">بنیادی معلومات</h3>
+      <div class="form-section">
+        <div class="form-grid">
+          <div>
+  <label>نام ریجن</label>
+  <select id="region">
+    <option value="">-- منتخب کریں --</option>
+    <option value="اجمیر ریجن">اجمیر ریجن</option>
+  </select>
+</div>
+
+          <div>
+  <label>نام اسٹیٹ</label>
+  <select id="state">
+    <option value="">-- منتخب کریں --</option>
+    <option value="گجرات اسٹیٹ">گجرات اسٹیٹ</option>
+    <option value="راجستھان">راجستھان</option>
+    <option value="مدھیہ پردیش">مدھیہ پردیش</option>
+  </select>
+</div>
+
+         <div>
+  <label>نام ڈویژن</label>
+  <select id="division">
+    <option value="">-- منتخب کریں --</option>
+    <option value="احمدآباد">احمدآباد</option>
+    <option value="سینٹرل گجرات">سینٹرل گجرات</option>
+    <option value="ساؤتھ گجرات">ساؤتھ گجرات</option>
+    <option value="نورتھ گجرات">نورتھ گجرات</option>
+    <option value="سوراشٹرا">سوراشٹرا</option>
+    <option value="کچھ">کچھ</option>
+  </select>
+</div>
+
+          <div><label>شاخ کوڈ</label><input id="branchCode" type="text"></div>
+          <div><label>شاخ کا نام</label><input id="branchName" type="text"></div>
+          <div><label>شاخ شہر</label><input id="branchCity" type="text"></div>
+        </div>
+      </div>
+
+      <!-- ناظم -->
+      <h3 onclick="toggleSection(this)">ناظم کی معلومات</h3>
+      <div class="form-section">
+        <div class="form-grid">
+          <div>
+  <label>نام ناظم اعلیٰ</label>
+  <select id="nazimAala">
+    <option value="">-- منتخب کریں --</option>
+    <option value="قاری شمیم">قاری شمیم</option>
+    <option value="قاری اسلام">قاری اسلام</option>
+    <option value="قاری غلام غوث">قاری غلام غوث</option>
+    <option value="قاری صدیق">قاری صدیق</option>
+    <option value="قاری یاسین باپو">قاری یاسین باپو</option>
+    <option value="قاری محسن">قاری محسن</option>
+    <option value="قاری اظہر">قاری اظہر</option>
+    <option value="قاری سلیم">قاری سلیم</option>
+    <option value="قاری شعیب">قاری شعیب</option>
+    <option value="قاری ثناء الحسن">قاری ثناء الحسن</option>
+    <option value="قاری وسیم">قاری وسیم</option>
+    <option value="قاری سیف اللہ">قاری سیف اللہ</option>
+    <option value="قاری شرجیل">قاری شرجیل</option>
+  </select>
+</div>
+
+          <div><label>اجیر کوڈ ناظم صاحب</label><input id="ajirNazim" type="text"></div>
+          <div><label>نام ناظم صاحب</label><input id="nazim" type="text"></div>
+          <div><label>موبائل نمبر ناظم صاحب</label><input id="nazimMobile" type="text"></div>
+        </div>
+      </div>
+
+      <!-- مدرس -->
+      <h3 onclick="toggleSection(this)">مدرس کی معلومات</h3>
+      <div class="form-section">
+        <div class="form-grid">
+          <div><label>اجیر کوڈ مدرس صاحب</label><input id="ajirUstad" type="text"></div>
+          <div><label>نام مدرس صاحب</label><input id="ustad" type="text"></div>
+          <div><label>موبائل نمبر مدرس صاحب</label><input id="ustadMobile" type="text"></div>
+          <div>
+            <label>مدرسۃ المدینہ</label>
+            <select id="madrasa">
+              <option value="">-- منتخب کریں --</option>
+              <option value="رہائشی">رہائشی</option>
+              <option value="فل ٹائم">فل ٹائم</option>
+              <option value="شارٹ ٹائم">شارٹ ٹائم</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- بچے -->
+      <h3 onclick="toggleSection(this)">بچے کی معلومات</h3>
+      <div class="form-section">
+        <div class="form-grid">
+          <div><label>نام طالب علم مع ولدیت</label><input id="student" type="text"></div>
+          <div><label>سرپرست موبائل نمبر</label><input id="guardianMobile" type="text"></div>
+          <div><label>شہر کا نام</label><input id="city" type="text"></div>
+          <div><label>پن کوڈ شہر</label><input id="pincode" type="text"></div>
+          <div><label>بچے کا جی آر نمبر</label><input id="grno" type="text"></div>
+          <div><label>امتحان نمبر</label><input id="examNo" type="text"></div>
+          <div><label>تاریخ تکمیل</label><input id="completionDate" type="date"></div>
+          <div><label>تاریخ امتحان</label><input id="examDate" type="date"></div>
+          <div><label>ابھی مصروفیت کیا ہے</label><input id="occupation" type="text"></div>
+        </div>
+      </div>
+
+      <!-- ادائیگی -->
+      <h3 onclick="toggleSection(this)">ادائیگی</h3>
+      <div class="form-section">
+        <div class="form-grid">
+          <div><label>مخارج و صفات</label><input id="makharij" type="number" oninput="calculateAdaigi()"></div>
+          <div><label>اجراء قواعد</label><input id="ijra" type="number" oninput="calculateAdaigi()"></div>
+          <div><label>کل حاصل کردہ نمبر (ادائیگی)</label><input id="totalAdaigi" type="number" readonly></div>
+          <div><label>کیفیت ادائیگی</label><input id="adaigi" type="text" readonly></div>
+        </div>
+      </div>
+
+      <!-- یادداشت -->
+      <h3 onclick="toggleSection(this)">یادداشت</h3>
+      <div class="form-section">
+        <div class="form-grid">
+          <div><label>رواں مختلف اغلاط</label><input id="mistakes" type="number" oninput="calculateMemory()"></div>
+          <div><label>معلومات قواعد</label><input id="infoRules" type="number" oninput="calculateMemory()"></div>
+          <div><label>پہچان قواعد</label><input id="identifyRules" type="number" oninput="calculateMemory()"></div>
+          <div><label>ہجے</label><input id="spelling" type="number" oninput="calculateMemory()"></div>
+          <div><label>ترتیل</label><input id="tarteel" type="number" oninput="calculateMemory()"></div>
+          <div><label>کل حاصل کردہ نمبر (یادداشت)</label><input id="totalMemory" type="number" readonly></div>
+          <div><label>کیفیت یادداشت</label><input id="memoryStatus" type="text" readonly></div>
+        </div>
+      </div>
+
+      <!-- کیفیت امتحان -->
+      <h3 onclick="toggleSection(this)">امتحانی کیفیت</h3>
+      <div class="form-section">
+        <div class="form-grid">
+          <div><label>کل حاصل کردہ نمبر</label><input id="finalMarks" type="number" readonly></div>
+          <div><label>امتحانی مجموعی کیفیت</label><input id="overall" type="text" readonly></div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button onclick="saveNazraData()">💾 محفوظ کریں</button>
+        <button onclick="clearForm()">🧹 صاف کریں</button>
+      </div>
+    </div>
+
+    <table class="result-table" id="dataTable">
+      <thead>
+        <tr>
+          <th>نام ریجن</th>
+          <th>نام اسٹیٹ</th>
+          <th>نام ڈویژن</th>
+          <th>شاخ کوڈ</th>
+          <th>شاخ کا نام</th>
+          <th>شاخ شہر</th>
+          <th>نام ناظم اعلیٰ</th>
+          <th>اجیر کوڈ ناظم صاحب</th>
+          <th>نام ناظم صاحب</th>
+          <th>موبائل نمبر ناظم صاحب</th>
+          <th>اجیر کوڈ مدرس صاحب</th>
+          <th>نام مدرس صاحب</th>
+          <th>موبائل نمبر مدرس صاحب</th>
+          <th>مدرسۃ المدینہ</th>
+          <th>نام طالب علم مع ولدیت</th>
+          <th>سرپرست موبائل نمبر</th>
+          <th>شہر کا نام</th>
+          <th>پن کوڈ شہر</th>
+          <th>بچے کا جی آر نمبر</th>
+          <th>امتحان نمبر</th>
+          <th>تاریخ تکمیل</th>
+          <th>تاریخ امتحان</th>
+          <th>ابھی مصروفیت کیا ہے</th>
+          <th>مخارج و صفات</th>
+          <th>اجراء قواعد</th>
+          <th>کل حاصل کردہ نمبر (ادائیگی)</th>
+          <th>کیفیت ادائیگی</th>
+          <th>رواں مختلف اغلاط</th>
+          <th>معلومات قواعد</th>
+          <th>پہچان قواعد</th>
+          <th>ہجے</th>
+          <th>ترتیل</th>
+          <th>کل حاصل کردہ نمبر (یادداشت)</th>
+          <th>کیفیت یادداشت</th>
+          <th>کل حاصل کردہ نمبر</th>
+          <th>امتحانی مجموعی کیفیت</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    function toggleForm(){ document.getElementById('nazraForm').classList.toggle('show'); }
+
+    // 🔽 صرف ایک سیکشن کھلے گا
+    function toggleSection(header) {
+      const allSections = document.querySelectorAll('.form-section');
+      const section = header.nextElementSibling;
+      allSections.forEach(s => {
+        if(s !== section) s.classList.remove('active');
+      });
+      section.classList.toggle('active');
+    }
+
+    function calculateAdaigi(){
+      const mak=parseFloat(makharij.value)||0;
+      const ij=parseFloat(ijra.value)||0;
+      const total=mak+ij;
+      totalAdaigi.value=total;
+      if(total>=45) adaigi.value='ممتاز مع الشرف';
+      else if(total>=40) adaigi.value='ممتاز';
+      else if(total>=35) adaigi.value='بہتر';
+      else if(total>0) adaigi.value='کمزور';
+      calculateOverall();
+    }
+
+    function calculateMemory(){
+      const t=(+mistakes.value||0)+(+infoRules.value||0)+(+identifyRules.value||0)+(+spelling.value||0)+(+tarteel.value||0);
+      totalMemory.value=t;
+      if(t>=45) memoryStatus.value='ممتاز مع الشرف';
+      else if(t>=40) memoryStatus.value='ممتاز';
+      else if(t>=35) memoryStatus.value='بہتر';
+      else if(t>0) memoryStatus.value='کمزور';
+      calculateOverall();
+    }
+
+    function calculateOverall(){
+      const total=(+totalAdaigi.value||0)+(+totalMemory.value||0);
+      finalMarks.value=total;
+      if(total>=90) overall.value='ممتاز مع شرف';
+      else if(total>=80) overall.value='ممتاز';
+      else if(total>=70) overall.value='بہتر';
+      else if(total>0) overall.value='کمزور';
+    }
+
+    
+    function saveData(){
+  const inputs=document.querySelectorAll('#nazraForm input, #nazraForm select');
+  const data={};
+  inputs.forEach(i=>data[i.id]=i.value);
+  if(!data.student){alert("براہ کرم طالب علم کا نام درج کریں");return;}
+  const t=document.querySelector('#dataTable tbody');
+  const r=t.insertRow();
+  r.innerHTML=`
+  <td>${data.region}</td><td>${data.state}</td><td>${data.division}</td><td>${data.branchCode}</td><td>${data.branchName}</td><td>${data.branchCity}</td>
+  <td>${data.nazimAala}</td><td>${data.ajirNazim}</td><td>${data.nazim}</td><td>${data.nazimMobile}</td>
+  <td>${data.ajirUstad}</td><td>${data.ustad}</td><td>${data.ustadMobile}</td><td>${data.madrasa}</td>
+  <td>${data.student}</td><td>${data.guardianMobile}</td><td>${data.city}</td><td>${data.pincode}</td><td>${data.grno}</td><td>${data.examNo}</td>
+  <td>${data.completionDate}</td><td>${data.examDate}</td><td>${data.occupation}</td>
+  <td>${data.makharij}</td><td>${data.ijra}</td><td>${data.totalAdaigi}</td><td>${data.adaigi}</td>
+  <td>${data.mistakes}</td><td>${data.infoRules}</td><td>${data.identifyRules}</td><td>${data.spelling}</td><td>${data.tarteel}</td>
+  <td>${data.totalMemory}</td><td>${data.memoryStatus}</td><td>${data.finalMarks}</td><td>${data.overall}</td>`;
+  document.querySelector('#dataTable').style.display='table';
+  alert("✅ تمام ڈیٹا محفوظ کر لیا گیا!");
+    }
+
+    function toggleSearch() {
+  const query = prompt("جس طالب علم کا نام تلاش کرنا چاہتے ہیں، وہ درج کریں:");
+  if (!query) return;
+
+  const table = document.getElementById('dataTable');
+  const rows = table.querySelectorAll('tbody tr');
+  let found = false;
+
+  rows.forEach(row => {
+    const nameCell = row.cells[0].textContent.trim();
+    if (nameCell.includes(query)) {
+      row.style.background = '#c8e6c9'; // ہلکا سبز رنگ ملنے پر
+      found = true;
+    } else {
+      row.style.background = '';
+    }
+  });
+
+  if (!found) alert("📄 کوئی ریکارڈ نہیں ملا۔");
+  else table.scrollIntoView({ behavior: "smooth" });
+}
+
+    function clearForm() {
+      if(confirm("کیا آپ واقعی فارم صاف کرنا چاہتے ہیں؟")) {
+        document.querySelectorAll('#nazraForm input').forEach(el => {
+          if(!el.readOnly) el.value = '';
+        });
+        document.querySelector('#madrasa').value = '';
+        alert("فارم صاف کر دیا گیا۔");
+      }
+    }
+
+    function toggleSearch() {
+  const query = prompt("جس طالب علم کا نام تلاش کرنا چاہتے ہیں، وہ درج کریں:");
+  if (!query) return;
+
+  const table = document.getElementById('dataTable');
+  const rows = table.querySelectorAll('tbody tr');
+  let found = false;
+
+  rows.forEach(row => {
+    const nameCell = row.cells[14].textContent.trim(); // 🔹 درست کالم
+    if (nameCell.includes(query)) {
+      row.style.background = '#c8e6c9'; // ہلکا سبز رنگ
+      found = true;
+    } else {
+      row.style.background = '';
+    }
+  });
+
+  if (!found) alert("📄 کوئی ریکارڈ نہیں ملا۔");
+  else table.scrollIntoView({ behavior: "smooth" });
+}
+
+
+
+    
+  </script>
+  <script>
+  function toggleForm(){ document.getElementById('nazraForm').classList.toggle('show'); }
+
+  // صرف ایک سیکشن کھلے گا
+  function toggleSection(header) {
+    const allSections = document.querySelectorAll('.form-section');
+    const section = header.nextElementSibling;
+    allSections.forEach(s => { if(s !== section) s.classList.remove('active'); });
+    section.classList.toggle('active');
+  }
+
+  function calculateAdaigi(){
+    const mak=parseFloat(makharij.value)||0;
+    const ij=parseFloat(ijra.value)||0;
+    const total=mak+ij;
+    totalAdaigi.value=total;
+    if(total>=45) adaigi.value='ممتاز مع الشرف';
+    else if(total>=40) adaigi.value='ممتاز';
+    else if(total>=35) adaigi.value='بہتر';
+    else if(total>0) adaigi.value='کمزور';
+    calculateOverall();
+  }
+
+  function calculateMemory(){
+    const t=(+mistakes.value||0)+(+infoRules.value||0)+(+identifyRules.value||0)+(+spelling.value||0)+(+tarteel.value||0);
+    totalMemory.value=t;
+    if(t>=45) memoryStatus.value='ممتاز مع الشرف';
+    else if(t>=40) memoryStatus.value='ممتاز';
+    else if(t>=35) memoryStatus.value='بہتر';
+    else if(t>0) memoryStatus.value='کمزور';
+    calculateOverall();
+  }
+
+  function calculateOverall(){
+    const total=(+totalAdaigi.value||0)+(+totalMemory.value||0);
+    finalMarks.value=total;
+    if(total>=90) overall.value='ممتاز مع شرف';
+    else if(total>=80) overall.value='ممتاز';
+    else if(total>=70) overall.value='بہتر';
+    else if(total>0) overall.value='کمزور';
+  }
+
+  // ✅ ڈیٹا محفوظ کرنا (localStorage کے ساتھ)
+  function saveData(){
+    const inputs=document.querySelectorAll('#nazraForm input, #nazraForm select');
+    const data={};
+    inputs.forEach(i=>data[i.id]=i.value);
+
+    if(!data.student){ alert("براہ کرم طالب علم کا نام درج کریں"); return; }
+
+    // پرانا ڈیٹا حاصل کریں
+    let saved = JSON.parse(localStorage.getItem('nazraData') || '[]');
+    saved.push(data);
+    localStorage.setItem('nazraData', JSON.stringify(saved)); // 🔹 یہاں محفوظ ہو رہا ہے
+
+    renderTable(); // جدول دوبارہ بنائیں
+    alert("✅ تمام ڈیٹا محفوظ کر لیا گیا!");
+  }
+
+  // ✅ ڈیٹا جدول میں دکھائیں
+  function renderTable(){
+    const tBody = document.querySelector('#dataTable tbody');
+    tBody.innerHTML = '';
+    const saved = JSON.parse(localStorage.getItem('nazraData') || '[]');
+    saved.forEach(data => {
+      const r = tBody.insertRow();
+      r.innerHTML = `
+      <td>${data.region}</td><td>${data.state}</td><td>${data.division}</td><td>${data.branchCode}</td><td>${data.branchName}</td><td>${data.branchCity}</td>
+      <td>${data.nazimAala}</td><td>${data.ajirNazim}</td><td>${data.nazim}</td><td>${data.nazimMobile}</td>
+      <td>${data.ajirUstad}</td><td>${data.ustad}</td><td>${data.ustadMobile}</td><td>${data.madrasa}</td>
+      <td>${data.student}</td><td>${data.guardianMobile}</td><td>${data.city}</td><td>${data.pincode}</td><td>${data.grno}</td><td>${data.examNo}</td>
+      <td>${data.completionDate}</td><td>${data.examDate}</td><td>${data.occupation}</td>
+      <td>${data.makharij}</td><td>${data.ijra}</td><td>${data.totalAdaigi}</td><td>${data.adaigi}</td>
+      <td>${data.mistakes}</td><td>${data.infoRules}</td><td>${data.identifyRules}</td><td>${data.spelling}</td><td>${data.tarteel}</td>
+      <td>${data.totalMemory}</td><td>${data.memoryStatus}</td><td>${data.finalMarks}</td><td>${data.overall}</td>`;
+    });
+    document.querySelector('#dataTable').style.display = saved.length ? 'table' : 'none';
+  }
+
+  // 🔍 تلاش فنکشن
+  function toggleSearch() {
+    const query = prompt("جس طالب علم کا نام تلاش کرنا چاہتے ہیں، وہ درج کریں:");
+    if (!query) return;
+    const table = document.getElementById('dataTable');
+    const rows = table.querySelectorAll('tbody tr');
+    let found = false;
+    rows.forEach(row => {
+      const nameCell = row.cells[14].textContent.trim();
+      if (nameCell.includes(query)) {
+        row.style.background = '#c8e6c9';
+        found = true;
+      } else {
+        row.style.background = '';
+      }
+    });
+    if (!found) alert("📄 کوئی ریکارڈ نہیں ملا۔");
+    else table.scrollIntoView({ behavior: "smooth" });
+  }
+
+  // 🔹 فارم صاف کرنا
+  function clearForm() {
+    if(confirm("کیا آپ واقعی فارم صاف کرنا چاہتے ہیں؟")) {
+      document.querySelectorAll('#nazraForm input').forEach(el => {
+        if(!el.readOnly) el.value = '';
+      });
+      document.querySelector('#madrasa').value = '';
+      alert("فارم صاف کر دیا گیا۔");
+    }
+  }
+
+  // ✅ صفحہ لوڈ ہوتے ہی پرانا ڈیٹا دکھاؤ
+  window.onload = renderTable;
+</script>
+<script type="module">
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAU6SfN6rrMdxVe4V3TW6DHvx0wl-W0MP4",
+  authDomain: "mtm-final-exam.firebaseapp.com",
+  databaseURL: "https://mtm-final-exam-default-rtdb.firebaseio.com",
+  projectId: "mtm-final-exam",
+  storageBucket: "mtm-final-exam.firebasestorage.app",
+  messagingSenderId: "600001694891",
+  appId: "1:600001694891:web:cf235c6c4a77d5a093fbee",
+  measurementId: "G-GCLYLJ9FWC"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ✅ فارم ڈیٹا Firebase میں محفوظ کرنا
+window.saveNazraData = function() {
+  const inputs = document.querySelectorAll('#nazraForm input, #nazraForm select');
+  const data = {};
+  inputs.forEach(i => data[i.id] = i.value);
+// 🔄 Firebase میں ناظرہ فارم ڈیٹا محفوظ کرنا
+  push(ref(db, "nazraRecords"), data)
+    .then(() => alert("✅ ڈیٹا Firebase میں محفوظ کر لیا گیا!"))
+    .catch(err => alert("⚠️ خرابی: " + err.message));
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>شہر</title>
+    <style>
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        /* 🔹 Top Buttons aligned to RIGHT SIDE */
+        .top-buttons {
+            display: flex;
+            justify-content: flex-start;
+            /* For RTL, this means right side */
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-green {
+            background-color: #28a745;
+        }
+
+        .btn-gray {
+            background-color: #6c757d;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0b4d3a;
+            color: white;
+            font-weight: bold;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .yes-no {
+            margin-top: 8px;
+        }
+
+        .yes-no label {
+            margin-right: 15px;
+            font-weight: normal;
+        }
+
+        .form-buttons {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .save-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        H2 {
+            color: #065f3d;
+            border-bottom: 2px solid #0a704c;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>اَلْحَمْدُ لِلّٰہِ رَبِّ الْعٰلَمِیْنَ وَ الصَّلٰوۃُ وَالسَّلَامُ علٰی سَیِّدِ الْمُرْسَلِیْنَ ط
+            اَمَّا بَعْدُ
+            فَاَعُوْذُ بِاللّٰهِ مِنَ الشَّیْطٰنِ الرَّجِیْمِ ط بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ ط</h2>
+        <h3>شہر</h3>
+        <hr>
+        <div>
+            <div>
+
+                <!-- 🔹 Header Buttons (Right side in RTL) -->
+                <div class="top-buttons">
+                    <button class="btn btn-green" id="newCityBtn">نیا شہر</button>
+                    <button class="btn btn-gray" onclick="window.history.back()">Back Page</button>
+                </div>
+
+                <!-- 🔹 Hidden Form -->
+                <div class="form-container" id="cityFormContainer">
+                    <h3 style="text-align:center;">🏙️ نیا شہر شامل کریں</h3>
+                    <form id="cityForm">
+                        <div class="form-group">
+                            <label for="province">صوبہ</label>
+                            <input type="text" id="province" name="province" placeholder="مثال: پنجاب" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>شہر</label>
+                            <input type="text" id="city" name="city" placeholder="شہر کا نام" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>فعال</label>
+                            <div class="yes-no">
+                                <label><input type="radio" name="active" value="Yes" required> ہاں</label>
+                                <label><input type="radio" name="active" value="No"> نہیں</label>
+                            </div>
+                        </div>
+
+                        <div class="form-buttons">
+                            <button type="button" class="cancel-btn" id="cancelBtn">منسوخ کریں</button>
+                            <button type="submit" class="save-btn">محفوظ کریں</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 🔹 Table -->
+                <table id="cityTable">
+                    <thead>
+                        <tr>
+                            <th>نمبر</th>
+                            <th>صوبہ</th>
+                            <th>شہر</th>
+                            <th>فعال</th>
+                            <th>کارروائی</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <script>
+                    const newCityBtn = document.getElementById('newCityBtn');
+                    const cityFormContainer = document.getElementById('cityFormContainer');
+                    const cancelBtn = document.getElementById('cancelBtn');
+                    const form = document.getElementById('cityForm');
+                    const tableBody = document.querySelector('#cityTable tbody');
+
+                    let count = 1;
+
+                    newCityBtn.addEventListener('click', () => {
+                        cityFormContainer.style.display = 'block';
+                        newCityBtn.disabled = true;
+                    });
+
+                    cancelBtn.addEventListener('click', () => {
+                        cityFormContainer.style.display = 'none';
+                        form.reset();
+                        newCityBtn.disabled = false;
+                    });
+
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+
+                        const province = document.getElementById('province').value;
+                        const city = document.getElementById('city').value;
+                        const active = document.querySelector('input[name="active"]:checked').value;
+
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+        <td>${count++}</td>
+        <td>${province}</td>
+        <td>${city}</td>
+        <td>${active}</td>
+        <td><button onclick="this.closest('tr').remove()">❌ حذف</button></td>
+      `;
+                        tableBody.appendChild(newRow);
+
+                        form.reset();
+                        cityFormContainer.style.display = 'none';
+                        newCityBtn.disabled = false;
+                    });
+                </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+// 🔹 آپ کا Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyAU6SfN6rrMdxVe4V3TW6DHvx0wl-W0MP4",
+  authDomain: "mtm-final-exam.firebaseapp.com",
+  databaseURL: "https://mtm-final-exam-default-rtdb.firebaseio.com",
+  projectId: "mtm-final-exam",
+  storageBucket: "mtm-final-exam.firebasestorage.app",
+  messagingSenderId: "600001694891",
+  appId: "1:600001694891:web:cf235c6c4a77d5a093fbee",
+  measurementId: "G-GCLYLJ9FWC"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.db = db; // تاکہ باقی HTML میں use ہو سکے
+window.ref = ref;
+window.push = push;
+window.onValue = onValue;
+  </script>
+</body>
+
+</html>
